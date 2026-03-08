@@ -17,8 +17,8 @@ class NewsLoaded extends NewsState {
 }
 
 class NewsSaved extends NewsState {
-  final List<NewsItem> newsItems;
-  const NewsSaved(this.newsItems);
+  final List<NewsItem> newsSavedItems;
+  const NewsSaved(this.newsSavedItems);
 }
 
 class NewsError extends NewsState {

@@ -36,6 +36,7 @@ class News extends StatelessWidget{
                   return const SliverToBoxAdapter(
                     child: Center(child: CircularProgressIndicator()),
                   );
+                  
                 } else if (state is NewsLoaded) {
                   return SliverList(
                     delegate: SliverChildBuilderDelegate(
@@ -46,14 +47,15 @@ class News extends StatelessWidget{
                       childCount: state.newsItems.length,
                     ),
                   );
+
                 }else if (state is NewsSaved) {
                   return SliverList(
                     delegate: SliverChildBuilderDelegate(
                           (context, index) {
-                        final newsItem = state.newsItems[index];
+                        final newsItem = state.newsSavedItems[index];
                         return NewsButton(newsItem: newsItem, index: index);
                       },
-                      childCount: state.newsItems.length,
+                      childCount: state.newsSavedItems.length,
                     ),
                   );
                 } else if (state is NewsError) {
@@ -94,6 +96,11 @@ class NewsButton extends StatelessWidget {
         Navigator.pushNamed(context, RouteGenetaror.newDetails, arguments: newsItem);
         context.read<NewsCubit>().readNew(newsItem);
       },
+      onLongPress: (){
+        context.read<NewsCubit>().addNew(newsItem);
+        print(" News item added to saved news");
+      },
+      
       child: Row(
         children: [
           Image.network(newsItem.image, width: 100, height: 100),

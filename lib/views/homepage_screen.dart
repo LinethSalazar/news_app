@@ -15,7 +15,7 @@ class HomepageScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             
-            Text('HOme Page'),
+            Text('Home Page'),
 
             ElevatedButton(
               onPressed: () {

@@ -22,7 +22,6 @@ class NewsCubit extends Cubit<NewsState> {
       newsItems = await newsDatabase.getNewsItems();
       savedNewsItems = newsStorage.getNews();
       checkReadedNews();
-      emit(NewsLoaded(newsItems));
     } catch (e) {
       emit(NewsError(e.toString()));
     }
@@ -30,28 +29,34 @@ class NewsCubit extends Cubit<NewsState> {
   
 //mark news as read
   void readNew(NewsItem newsItem) {
-    final int index = newsItems.indexOf(newsItem);
-    if (index != -1) {
+    int index;
+    if (newsItems.contains(newsItem)) {
+      index = newsItems.indexOf(newsItem);
+      //store it in the read news box, to later check if it is read or not
       readStorage.saveReadNew(newsItem);
+      //save the readed version of the news item
       final NewsItem newItem = newsItems[index].readVersion();
       newsItems[index] = newItem;
-      emit(NewsLoaded(newsItems));
-    }else {
-      emit(NewsError("News item not found"));
+
+    }
+
+    if (savedNewsItems.contains(newsItem)) {
+      index = savedNewsItems.indexOf(newsItem);
+      //store in the readed box
+      readStorage.saveReadNew(newsItem);
+      //save the readed version in the saved news list
+      final NewsItem newItem = savedNewsItems[index].readVersion();
+      savedNewsItems[index] = newItem;
     }
   }
   //add news, to later save
   void addNew(NewsItem newsItem) {
-    newsStorage.saveNewsItem(newsItem);
+    if (!savedNewsItems.contains(newsItem)) {
+      newsStorage.saveNewsItem(newsItem); 
+      savedNewsItems.add(newsItem);
+    }
   }
-  void addNews(List<NewsItem> newsItems) {
-    newsStorage.saveNews(newsItems);
-  }
-  //delete news, to later save
-  void deleteNews(NewsItem newsItem) {
-    newsStorage.deleteNews(newsItem);
-    emit(NewsLoaded(newsItems));
-  }
+  
   //check readed news
   void checkReadedNews() {
     for (int i = 0; i < newsItems.length; i++) {
@@ -59,9 +64,14 @@ class NewsCubit extends Cubit<NewsState> {
         newsItems[i] = newsItems[i].readVersion();
       }
     }
+    for (int i = 0; i < savedNewsItems.length; i++) {
+      if (readStorage.isReadNew(savedNewsItems[i])) {
+        savedNewsItems[i] = savedNewsItems[i].readVersion();
+      }
+    }
   }
   void displayOnlineNews() {
-    if (savedNewsItems.isNotEmpty) {
+    if (savedNewsItems.isEmpty) {
       emit(NewsError("No news available"));
     }else {
       emit(NewsLoaded(newsItems));
@@ -74,5 +84,6 @@ class NewsCubit extends Cubit<NewsState> {
       emit(NewsSaved(savedNewsItems));
     }
   }
+  
 
 }
