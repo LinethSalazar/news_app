@@ -1,3 +1,4 @@
+import 'package:fake_assigment_1/views/saved_news_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fake_assigment_1/news/news.dart';
 import 'package:fake_assigment_1/views/homepage_screen.dart';
@@ -9,7 +10,7 @@ class RouteGenetaror {
   static const String home = '/';
   static const String news = '/news';
   static const String newDetails = '/newsDetails';
-
+  static const String savedNews = '/savedNews';
 
   RouteGenetaror._();
 
@@ -21,6 +22,8 @@ class RouteGenetaror {
         return MaterialPageRoute(builder: (_) => News());
       case newDetails:
         return MaterialPageRoute(builder: (_) => NewView(newsItem: settings.arguments as NewsItem));
+      case savedNews:
+        return MaterialPageRoute(builder: (_) => SavedNewsScreen());
       default:
         return MaterialPageRoute(builder: (_) => UnknownScreen());
     }

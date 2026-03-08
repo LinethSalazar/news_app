@@ -22,6 +22,7 @@ class NewsCubit extends Cubit<NewsState> {
       newsItems = await newsDatabase.getNewsItems();
       savedNewsItems = newsStorage.getNews();
       checkReadedNews();
+      emit(NewsLoaded(newsItems, savedNewsItems));
     } catch (e) {
       emit(NewsError(e.toString()));
     }
@@ -48,12 +49,14 @@ class NewsCubit extends Cubit<NewsState> {
       final NewsItem newItem = savedNewsItems[index].readVersion();
       savedNewsItems[index] = newItem;
     }
+    emit(NewsLoaded(newsItems, savedNewsItems));
   }
   //add news, to later save
   void addNew(NewsItem newsItem) {
     if (!savedNewsItems.contains(newsItem)) {
       newsStorage.saveNewsItem(newsItem); 
       savedNewsItems.add(newsItem);
+      emit(NewsLoaded(newsItems, savedNewsItems));
     }
   }
   
@@ -69,20 +72,7 @@ class NewsCubit extends Cubit<NewsState> {
         savedNewsItems[i] = savedNewsItems[i].readVersion();
       }
     }
-  }
-  void displayOnlineNews() {
-    if (savedNewsItems.isEmpty) {
-      emit(NewsError("No news available"));
-    }else {
-      emit(NewsLoaded(newsItems));
-    }
-  }
-  void displaySaved() {
-    if (savedNewsItems.isEmpty) {
-      emit(NewsError("No news saved"));
-    } else {
-      emit(NewsSaved(savedNewsItems));
-    }
+    emit(NewsLoaded(newsItems, savedNewsItems));
   }
   
 

@@ -19,7 +19,6 @@ class HomepageScreen extends StatelessWidget {
 
             ElevatedButton(
               onPressed: () {
-                context.read<NewsCubit>().displayOnlineNews();
                 Navigator.pushNamed(context, RouteGenetaror.news);
                 
 
@@ -28,8 +27,7 @@ class HomepageScreen extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                context.read<NewsCubit>().displaySaved();
-                Navigator.pushNamed(context, RouteGenetaror.news);
+                Navigator.pushNamed(context, RouteGenetaror.savedNews);
               },
               child: Text('Saved News'),
             ),

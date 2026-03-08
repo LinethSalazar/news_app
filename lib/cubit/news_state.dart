@@ -13,13 +13,10 @@ class NewsLoading extends NewsState {
 
 class NewsLoaded extends NewsState {
   final List<NewsItem> newsItems;
-  const NewsLoaded(this.newsItems);
+  final List<NewsItem> newsSavedItems;
+  const NewsLoaded(this.newsItems, this.newsSavedItems);
 }
 
-class NewsSaved extends NewsState {
-  final List<NewsItem> newsSavedItems;
-  const NewsSaved(this.newsSavedItems);
-}
 
 class NewsError extends NewsState {
   final String message;
