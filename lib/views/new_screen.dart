@@ -11,7 +11,7 @@ class NewView extends StatelessWidget{
     return Scaffold(
       appBar: AppBar(title: Text(newsItem.title), backgroundColor: const Color.fromARGB(117, 79, 255, 214),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,5 +1,4 @@
 //Fake News Generator
-import 'dart:math';
 import 'package:fake_assigment_1/news/model/news_item.dart';
 import 'package:faker_dart/faker_dart.dart';
 import 'news_gen.dart';

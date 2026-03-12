@@ -1,3 +1,5 @@
+import 'package:fake_assigment_1/news/model/fetcher/online_news_gen.dart';
+
 import '../model.dart';
 
 
@@ -7,8 +9,8 @@ class NewsDatabase {
   static final NewsDatabase _singleton = NewsDatabase._internal();
 
   //change the source of the news here
-  final NewsSourcer _news = FakeNewsGenerator();
-
+  //final NewsSourcer _news = FakeNewsGenerator();
+  final NewsSourcer _news = OnlineNewsGen();
   factory NewsDatabase() {
     return _singleton;
   }

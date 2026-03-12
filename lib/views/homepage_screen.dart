@@ -1,8 +1,6 @@
 
-import 'package:fake_assigment_1/cubit/new_cubit.dart';
 import 'package:fake_assigment_1/routers/route_generator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 
 class HomepageScreen extends StatelessWidget {
