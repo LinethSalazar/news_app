@@ -1,4 +1,4 @@
-# fake_assigment_1
+# news_app
 
 # Flutter News App
 
