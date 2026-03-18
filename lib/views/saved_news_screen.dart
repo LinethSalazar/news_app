@@ -14,20 +14,37 @@ class SavedNewsScreen extends StatelessWidget{
 
         body: CustomScrollView(
           slivers: [
-            SliverAppBar(
-              expandedHeight: 190,
-              pinned: true,
-              backgroundColor: const Color.fromARGB(141, 255, 4, 4),
-
-              flexibleSpace: FlexibleSpaceBar(
-                title: const Text("Saved News", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w800)),
-                background: Padding(
-                  padding: const EdgeInsets.only(right: 100.0),
-                  child: Image.asset("images/logsimple.png", width: 250, height: 250),
+           SliverAppBar(
+            expandedHeight: 90,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              titlePadding: EdgeInsets.only(left: 16, bottom: 12),
+              title: Padding(
+                padding: const EdgeInsets.only(left: 30.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min, 
+                  children: [
+                    
+                    Text(
+                      "Saved News",
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: -0.5,
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Image.asset(
+                      "images/logsimple.png",
+                      width: 28, 
+                      height: 28,
+                      fit: BoxFit.contain,
+                    ),
+                  ],
                 ),
-
               ),
             ),
+          ),
             //List of news items goes here
             BlocBuilder<NewsCubit, NewsState>(
               builder: (context, state) {

@@ -20,8 +20,8 @@ class NewsButton extends StatelessWidget {
         backgroundColor: newsItem.isRead
             ? const Color.fromARGB(184, 158, 158, 158)
             : (index % 2 == 0
-                  ? const Color.fromARGB(97, 240, 129, 129)
-                  : const Color.fromARGB(115, 52, 162, 48)),
+                  ? const Color.fromARGB(255, 255, 210, 210)
+                  : const Color.fromARGB(255, 228, 255, 236)),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         padding: const EdgeInsets.all(10),
       ),

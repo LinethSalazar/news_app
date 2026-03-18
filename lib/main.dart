@@ -17,8 +17,7 @@ void main() async {
 }
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
+  //to save loong press in the new :)
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
