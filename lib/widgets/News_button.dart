@@ -4,6 +4,7 @@ import 'package:fake_assigment_1/routers/route_generator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class NewsButton extends StatelessWidget {
   final NewsItem newsItem;
@@ -19,8 +20,8 @@ class NewsButton extends StatelessWidget {
         backgroundColor: newsItem.isRead
             ? const Color.fromARGB(184, 158, 158, 158)
             : (index % 2 == 0
-                  ? const Color.fromARGB(191, 164, 178, 255)
-                  : const Color.fromARGB(157, 209, 164, 255)),
+                  ? const Color.fromARGB(97, 240, 129, 129)
+                  : const Color.fromARGB(115, 52, 162, 48)),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         padding: const EdgeInsets.all(10),
       ),
@@ -38,12 +39,28 @@ class NewsButton extends StatelessWidget {
 
       child: Row(
         children: [
-          Image.network(newsItem.image, width: 100, height: 100),
+          //Image.network(newsItem.image, width: 100, height: 100),
+          //to not load the image every time, we use cached network image, it will cache the image after the first load, and load it from cache next time
+          CachedNetworkImage(
+            imageUrl: newsItem.image,
+            height: 100,
+            width: 120,
+            fit: BoxFit.cover,
+            placeholder: (context, url) => Container(
+              height: 180,
+              color: Colors.grey[200],
+            ),
+            errorWidget: (context, url, error) => Container(
+              height: 180,
+              color: Colors.grey[200],
+              child: Icon(Icons.image_not_supported, color: Colors.grey),
+            ),
+        ),
           SizedBox(width: 10),
           Expanded(
             child: Text(
               newsItem.title,
-              style: TextStyle(fontSize: 17, fontWeight: FontWeight.w800),
+              style: TextStyle(fontSize: 17, fontWeight: FontWeight.w800, color: Colors.black ),
             ),
           ),
         ],

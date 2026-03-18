@@ -5,6 +5,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 class ReadStorage {
   late Box readBox;
   
+  void clearRead() {
+    readBox.clear();
+  }
   Future<void> init() async {
     readBox = await Hive.openBox('readBox');
   }
@@ -22,10 +25,15 @@ class ReadStorage {
   }
 
 }
-class NewsStorage {
+abstract class HiveStorage {
   late Box newsBox;
+  String get boxName;
+  bool get isEmpty => newsBox.isEmpty;
 
- 
+  Future<void> init() async {
+    newsBox = await Hive.openBox(boxName);
+  }
+  
   void saveNews(List<NewsItem> newsItems) {
     for (NewsItem oneNew in newsItems) {
       newsBox.put(oneNew.title, {
@@ -57,14 +65,15 @@ class NewsStorage {
   void deleteNews(NewsItem newsItem) {
     newsBox.delete(newsItem.title);
   }
+
   void clearNews() {
     newsBox.clear();
   }
-   Future<void> init() async {
-    newsBox = await Hive.openBox('newsBox');
-  }
 
   void saveNewsItem(NewsItem newsItem) {
+    if (newsBox.containsKey(newsItem.title)) {
+      return;
+    }
     newsBox.put(newsItem.title, {
       'title': newsItem.title,
       'content': newsItem.body,
@@ -75,4 +84,28 @@ class NewsStorage {
     });
   }
 
+}
+
+class NewsStorage extends HiveStorage {
+  @override
+  String get boxName => 'newsBox';
+}
+
+class NewsCacheStorage extends HiveStorage {
+  @override
+  String get boxName => 'newsCacheBox';
+  
+
+  void upToDate({required DateTime Date}) {
+    if (newsBox.isEmpty) {
+      return;
+    }
+    for (var element in newsBox.values) {
+      DateTime cachedDate = DateTime.parse(element['publishedAt']);
+      if (Date.difference(cachedDate).inDays >= 10) {
+        newsBox.delete(element['title']);
+        return;
+      }
+    }
+  }
 }

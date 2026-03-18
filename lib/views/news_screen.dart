@@ -17,13 +17,13 @@ class News extends StatelessWidget{
             SliverAppBar(
               expandedHeight: 190,
               pinned: true,
-              backgroundColor: const Color.fromARGB(117, 79, 255, 214),
+              backgroundColor: const Color.fromARGB(117, 255, 0, 0),
 
               flexibleSpace: FlexibleSpaceBar(
                 title: const Text("Upei News", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w800)),
                 background: Padding(
                   padding: const EdgeInsets.only(right: 100.0),
-                  child: Image.asset("images/trump.png", width: 250, height: 250),
+                  child: Image.asset("images/logsimple.png", width: 250, height: 250),
                 ),
 
               ),
@@ -40,9 +40,13 @@ class News extends StatelessWidget{
                   return SliverList(
                     delegate: SliverChildBuilderDelegate(
                           (context, index) {
-                        final newsItem = state.newsItems[index];
-                        return NewsButton(newsItem: newsItem, index: index);
-                      },
+                            if (state.newsItems.isEmpty) {
+                              return const Center(child: Text('No news available'));
+                            } else{
+                              final newsItem = state.newsItems[index];
+                              return NewsButton(newsItem: newsItem, index: index);
+                            }
+                          },
                       childCount: state.newsItems.length,
                     ),
                   );

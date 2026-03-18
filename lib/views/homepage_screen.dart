@@ -29,6 +29,13 @@ class HomepageScreen extends StatelessWidget {
               },
               child: Text('Saved News'),
             ),
+            IconButton(
+              icon: Icon(Icons.settings),
+              onPressed: () =>
+                  Navigator.pushNamed(context, RouteGenetaror.sesett),
+            )
+
+
           ],
         ),
       ),

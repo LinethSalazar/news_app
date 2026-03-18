@@ -5,12 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fake_assigment_1/routers/route_generator.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  ReadStorage readStorage = ReadStorage();
-  NewsStorage newsStorage = NewsStorage();
-  await readStorage.init();
-  await newsStorage.init();
-
+  
   runApp(
     BlocProvider(
       create: (_) => NewsCubit()..databaseSingleton(),

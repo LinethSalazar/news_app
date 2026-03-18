@@ -17,13 +17,13 @@ class SavedNewsScreen extends StatelessWidget{
             SliverAppBar(
               expandedHeight: 190,
               pinned: true,
-              backgroundColor: const Color.fromARGB(117, 79, 217, 255),
+              backgroundColor: const Color.fromARGB(141, 255, 4, 4),
 
               flexibleSpace: FlexibleSpaceBar(
                 title: const Text("Saved News", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w800)),
                 background: Padding(
                   padding: const EdgeInsets.only(right: 100.0),
-                  child: Image.asset("images/trump.png", width: 250, height: 250),
+                  child: Image.asset("images/logsimple.png", width: 250, height: 250),
                 ),
 
               ),
@@ -40,9 +40,13 @@ class SavedNewsScreen extends StatelessWidget{
                   return SliverList(
                     delegate: SliverChildBuilderDelegate(
                           (context, index) {
-                        final newsItem = state.newsSavedItems[index];
-                        return NewsButton(newsItem: newsItem, index: index);
-                      },
+                            if (state.newsSavedItems.isEmpty) {
+                              return const Center(child: Text('No saved news available'));
+                            } else{
+                              final newsItem = state.newsSavedItems[index];
+                              return NewsButton(newsItem: newsItem, index: index);
+                            }
+                          },
                       childCount: state.newsSavedItems.length,
                     ),
                   );
